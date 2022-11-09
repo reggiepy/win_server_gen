@@ -40,7 +40,7 @@ func CopyServerDll(DistDir string, option FileOption) error {
 			continue
 		}
 		if strings.HasSuffix(file.Name(), "dll") {
-			fmt.Printf("start copying %d %s ...\n", i+1, file.Name())
+			VerboseLog(fmt.Sprintf("start copying %d %s ...\n", i+1, file.Name()))
 			srcFile := path.Join("server", file.Name())
 			destFile := path.Join(DistDir, file.Name())
 			err := CopyFile(srcFile, destFile, option, FileExistIgnoreHandler)

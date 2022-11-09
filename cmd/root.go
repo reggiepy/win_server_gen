@@ -2,11 +2,11 @@ package cmd
 
 import (
 	"fmt"
-	"os"
-
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"os"
+	"win_server_gen/handler"
 )
 
 var (
@@ -18,7 +18,6 @@ var (
 		Short: "A generator for windows service script",
 		Long:  `win_server_gen is a CLI generator for windows service script`,
 	}
-	Verbose bool
 )
 
 // Execute executes the root command.
@@ -32,7 +31,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.cobra.yaml)")
 	rootCmd.PersistentFlags().Bool("viper", true, "use Viper for configuration")
 	viper.BindPFlag("useViper", rootCmd.PersistentFlags().Lookup("viper"))
-	rootCmd.PersistentFlags().BoolVarP(&Verbose, "verbose", "v", false, "verbose output")
+	rootCmd.PersistentFlags().BoolVarP(&handler.Verbose, "verbose", "v", false, "verbose output")
 }
 
 func er(msg interface{}) {

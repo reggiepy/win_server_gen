@@ -92,40 +92,54 @@ type FileExistOption struct {
 }
 
 func FileExistQuestionHandler(option FileExistOption) (writeFlag bool, err error) {
+	if !util.FileExist(option.DistFile) {
+		return true, nil
+	}
+	if option.Option.OverWrite {
+		_ = os.Remove(option.DistFile)
+		return true, nil
+	}
 	if HandleCommandLine("file already exists. rewriting?") {
 		_ = os.Remove(option.DistFile)
+		return true, nil
 	}
 	return
 }
 
 func FileExistDefaultHandler(option FileExistOption) (writeFlag bool, err error) {
-	if !option.Option.OverWrite {
-		if util.FileExist(option.DistFile) {
-			return false, fmt.Errorf("file already exists: %v", option.DistFile)
-		}
+	if !util.FileExist(option.DistFile) {
+		return true, nil
 	}
-	_ = os.Remove(option.DistFile)
-
+	if option.Option.OverWrite {
+		_ = os.Remove(option.DistFile)
+		return true, nil
+	}
+	if util.FileExist(option.DistFile) {
+		return false, fmt.Errorf("file already exists: %v", option.DistFile)
+	}
 	return
 }
 
 func FileExistIgnoreHandler(option FileExistOption) (writeFlag bool, err error) {
+	if !util.FileExist(option.DistFile) {
+		return true, nil
+	}
+	if option.Option.OverWrite {
+		_ = os.Remove(option.DistFile)
+		return true, nil
+	}
+
 	if option.SrcFile != "" {
-		if util.FileExist(option.DistFile) {
-			distFileInfo, _ := os.Lstat(option.DistFile)
-			srcFileInfo, _ := os.Lstat(option.SrcFile)
-			if distFileInfo.Size() == srcFileInfo.Size() {
-				fmt.Printf("src file & dest file is same ignore: %v\n", option.DistFile)
-			} else {
-				os.Remove(option.DistFile)
-				return true, nil
-			}
+		distFileInfo, _ := os.Lstat(option.DistFile)
+		srcFileInfo, _ := os.Lstat(option.SrcFile)
+		if distFileInfo.Size() != srcFileInfo.Size() {
+			_ = os.Remove(option.DistFile)
+			return true, nil
+		} else {
+			VerboseLog(fmt.Sprintf("src file & dest file is same ignore: \n%v\n%v\n", option.SrcFile, option.DistFile))
 		}
 	} else {
-		if !util.FileExist(option.DistFile) {
-			return true, nil
-		}
+		VerboseLog(fmt.Sprintf("file exist ignore: %v\n", option.DistFile))
 	}
-	fmt.Printf("file exist ignore: %v\n", option.DistFile)
 	return false, err
 }

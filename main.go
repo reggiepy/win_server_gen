@@ -19,6 +19,6 @@ func Test() {
 }
 
 func main() {
-	Test()
+	//Test()
 	_ = cmd.Execute()
 }
