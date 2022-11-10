@@ -27,7 +27,7 @@ func (h *BatHandler) GenStartBatString() string {
 }
 
 func (h *BatHandler) GenStopBatString() string {
-	return fmt.Sprintf("taskkill /im %s /t /f", h.Server.Name)
+	return fmt.Sprintf("taskkill /im %s /t /f", h.Server.KillKeyWorld)
 }
 func (h *BatHandler) GenStartVbsString() string {
 	return fmt.Sprintf("CreateObject(\"WScript.Shell\").Run \"%s\",0", h.Server.Executable)

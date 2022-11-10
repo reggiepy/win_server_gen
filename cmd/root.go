@@ -21,8 +21,6 @@ var (
 			return
 		},
 	}
-	Verbose bool
-	verbose bool
 )
 
 // Execute executes the root command.

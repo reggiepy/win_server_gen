@@ -14,6 +14,9 @@ type Server struct {
 	Depends        string `xml:"depends"`
 	Executable     string `xml:"executable"`
 	StopExecutable string `xml:"stopexecutable"`
+
+	//	杀进程关键字
+	KillKeyWorld string `xml:"killkeyworld"`
 }
 
 func NewServer(name string) (server *Server) {
