@@ -2,7 +2,7 @@ package handler
 
 import (
 	"fmt"
-	"path"
+	"path/filepath"
 )
 
 type BatHandler struct {
@@ -34,16 +34,16 @@ func (h *BatHandler) GenStartVbsString() string {
 }
 
 func (h *BatHandler) GenStartBatFile() error {
-	dest := path.Join(DistDir, fmt.Sprintf("start%s.bat", h.Server.Name))
+	dest := filepath.Join(DistDir, fmt.Sprintf("start%s.bat", h.Server.Name))
 	return WriteFile(h.GenStartBatString(), dest, h.FileOption, FileExistIgnoreHandler)
 }
 
 func (h *BatHandler) GenStopBatFile() error {
-	dest := path.Join(DistDir, fmt.Sprintf("stop%s.bat", h.Server.Name))
+	dest := filepath.Join(DistDir, fmt.Sprintf("stop%s.bat", h.Server.Name))
 	return WriteFile(h.GenStopBatString(), dest, h.FileOption, FileExistIgnoreHandler)
 }
 func (h *BatHandler) GenStartVbsFile() error {
-	dest := path.Join(DistDir, fmt.Sprintf("start%s.VBS", h.Server.Name))
+	dest := filepath.Join(DistDir, fmt.Sprintf("start%s.VBS", h.Server.Name))
 	return WriteFile(h.GenStartVbsString(), dest, h.FileOption, FileExistIgnoreHandler)
 }
 

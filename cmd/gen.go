@@ -9,9 +9,9 @@ import (
 func init() {
 	genCmd.Flags().StringVarP(&server.Name, "name", "n", "", "Name of the server")
 	_ = genCmd.MarkFlagRequired("name")
-	genCmd.Flags().StringVar(&server.Executable, "executable", "", "server executable")
+	genCmd.Flags().StringVarP(&server.Executable, "executable", "e", "", "server executable")
 	_ = genCmd.MarkFlagRequired("executable")
-	genCmd.Flags().StringVar(&server.StopExecutable, "stopexecutable", "", "server stopexecutable")
+	genCmd.Flags().StringVarP(&server.StopExecutable, "stopexecutable", "s", "", "server stopexecutable")
 	genCmd.Flags().BoolVar(&fileOption.OverWrite, "overwrite", false, "over write file (default: false)")
 	serverCmd.AddCommand(genCmd)
 }

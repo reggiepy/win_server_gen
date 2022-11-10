@@ -17,7 +17,12 @@ var (
 		Use:   "win_server_gen",
 		Short: "A generator for windows service script",
 		Long:  `win_server_gen is a CLI generator for windows service script`,
+		PreRun: func(c *cobra.Command, args []string) {
+			return
+		},
 	}
+	Verbose bool
+	verbose bool
 )
 
 // Execute executes the root command.
@@ -30,7 +35,7 @@ func init() {
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.cobra.yaml)")
 	rootCmd.PersistentFlags().Bool("viper", true, "use Viper for configuration")
-	viper.BindPFlag("useViper", rootCmd.PersistentFlags().Lookup("viper"))
+	_ = viper.BindPFlag("useViper", rootCmd.PersistentFlags().Lookup("viper"))
 	rootCmd.PersistentFlags().BoolVarP(&handler.Verbose, "verbose", "v", false, "verbose output")
 }
 

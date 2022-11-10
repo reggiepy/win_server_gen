@@ -2,7 +2,7 @@ package handler
 
 import (
 	"fmt"
-	"path"
+	"path/filepath"
 )
 
 type Server struct {
@@ -24,8 +24,8 @@ func NewServer(name string) (server *Server) {
 		Name:           name,
 		Description:    name,
 		LogMode:        "roll",
-		LogPath:        path.Join(BaseDir, "server-logs"),
-		Executable:     path.Join(BaseDir, fmt.Sprintf("start%s.bat", name)),
-		StopExecutable: path.Join(BaseDir, fmt.Sprintf("stop%s.bat", name)),
+		LogPath:        filepath.Join(BaseDir, "server-logs"),
+		Executable:     filepath.Join(BaseDir, fmt.Sprintf("start%s.bat", name)),
+		StopExecutable: filepath.Join(BaseDir, fmt.Sprintf("stop%s.bat", name)),
 	}
 }

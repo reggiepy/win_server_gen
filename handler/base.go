@@ -2,6 +2,7 @@ package handler
 
 import (
 	"os"
+	"path/filepath"
 )
 
 var (
@@ -19,6 +20,8 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
+	absBaseDir, _ := filepath.Abs(BaseDir)
+	BaseDir = filepath.Dir(absBaseDir)
 }
 
 func SetBaseDir(dir string) {

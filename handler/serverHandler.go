@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 )
 
 func GenServerFile(server *Server, dist string) error {
-	destFile := path.Join(DistDir, dist)
+	destFile := filepath.Join(DistDir, dist)
 	_, err := os.Lstat(destFile)
 	if !os.IsNotExist(err) {
 		os.Remove(destFile)
@@ -30,7 +30,7 @@ func GenServerFile(server *Server, dist string) error {
 }
 
 func CopyServerDll(DistDir string, option FileOption) error {
-	files, err := ioutil.ReadDir("server")
+	files, err := ioutil.ReadDir(filepath.Join(BaseDir, "server"))
 	if err != nil {
 		fmt.Printf("error: %v", err)
 		return fmt.Errorf("error server directory: %s %v", DistDir, err)
@@ -41,8 +41,8 @@ func CopyServerDll(DistDir string, option FileOption) error {
 		}
 		if strings.HasSuffix(file.Name(), "dll") {
 			VerboseLog(fmt.Sprintf("start copying %d %s ...\n", i+1, file.Name()))
-			srcFile := path.Join("server", file.Name())
-			destFile := path.Join(DistDir, file.Name())
+			srcFile := filepath.Join(filepath.Join(BaseDir, "server"), file.Name())
+			destFile := filepath.Join(DistDir, file.Name())
 			err := CopyFile(srcFile, destFile, option, FileExistIgnoreHandler)
 			if err != nil {
 				return fmt.Errorf("error copying %s %v", file, err)
@@ -74,8 +74,11 @@ func (h *ServerHandler) GenServerXml() error {
 }
 
 func (h *ServerHandler) GenServerExe() error {
-	exePath := path.Join(DistDir, fmt.Sprintf("%s-service.exe", h.Server.Name))
-	err := CopyFile("server/service.exe", exePath, h.FileOption, FileExistIgnoreHandler)
+	VerboseLog(fmt.Sprintf("BaseDir: %v", BaseDir))
+	VerboseLog(fmt.Sprintf("DistDir: %v", DistDir))
+	exePath := filepath.Join(DistDir, fmt.Sprintf("%s-service.exe", h.Server.Name))
+	sourcePath := filepath.Join(filepath.Join(BaseDir, "server"), "service.exe")
+	err := CopyFile(sourcePath, exePath, h.FileOption, FileExistIgnoreHandler)
 	if err != nil {
 		return err
 	}
