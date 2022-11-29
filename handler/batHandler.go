@@ -18,16 +18,17 @@ func NewBatchHandler(server *Server) *BatHandler {
 }
 
 func (h *BatHandler) GenStartBatString() string {
-	stopCommand := h.Server.StopExecutable
-	if stopCommand == "" {
-		stopCommand = fmt.Sprintf("call stop%s.bat", h.Server.Name)
-	}
+	stopCommand := fmt.Sprintf("call stop%s.bat", h.Server.Name)
 	startCommand := fmt.Sprintf("call start%s.VBS", h.Server.Name)
 	return fmt.Sprintf("%s\n%s", stopCommand, startCommand)
 }
 
 func (h *BatHandler) GenStopBatString() string {
-	return fmt.Sprintf("taskkill /im %s /t /f", h.Server.KillKeyWorld)
+	stopCommand := h.Server.StopExecutable
+	if stopCommand == "" {
+		stopCommand = fmt.Sprintf("taskkill /im %s /t /f", h.Server.KillKeyWorld)
+	}
+	return stopCommand
 }
 func (h *BatHandler) GenStartVbsString() string {
 	return fmt.Sprintf("CreateObject(\"WScript.Shell\").Run \"%s\",0", h.Server.Executable)
