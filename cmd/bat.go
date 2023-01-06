@@ -9,6 +9,8 @@ import (
 var (
 	t           string
 	typeHandler = map[string]func(){}
+	server      = &handler.Server{}
+	fileOption  = handler.FileOption{}
 )
 
 func init() {
@@ -28,7 +30,7 @@ func init() {
 	_ = genCmd.MarkFlagRequired("killkeyworld")
 	genCmd.Flags().BoolVarP(&fileOption.OverWrite, "overwrite", "o", true, "over write file (default: false)")
 	genCmd.Flags().StringVarP(&t, "type", "t", "all", "gen server type (all | bat | server ) (default: all)")
-	serverCmd.AddCommand(genCmd)
+	rootCmd.AddCommand(genCmd)
 }
 
 var genCmd = &cobra.Command{
@@ -55,7 +57,7 @@ var genCmd = &cobra.Command{
 func genServer() {
 	serverHandle := handler.NewServerHandler(server)
 	serverHandle.FileOption = fileOption
-	err = serverHandle.GenAll()
+	err := serverHandle.GenAll()
 	if err != nil {
 		fmt.Printf("Error generating server: %v\n", err)
 	}
@@ -65,7 +67,7 @@ func genServer() {
 func genBat() {
 	batHandler := handler.NewBatchHandler(server)
 	batHandler.FileOption = fileOption
-	err = batHandler.GenAll()
+	err := batHandler.GenAll()
 	if err != nil {
 		fmt.Printf("Error generating script: %v\n", err)
 	}
