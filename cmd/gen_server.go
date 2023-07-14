@@ -48,6 +48,9 @@ var genServerCmd = &cobra.Command{
 		if server2.Description == "" {
 			server2.Description = server2.Name
 		}
+		if server2.Executable == "" {
+			server2.Executable = fmt.Sprintf("%s.exe", server2.Name)
+		}
 		dist := fmt.Sprintf("%s_server.xml", server2.Name)
 		destFile := filepath.Join(handler.DistDir, dist)
 		_, err := os.Lstat(destFile)
