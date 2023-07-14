@@ -32,3 +32,15 @@ func NewServer(name string) (server *Server) {
 		StopExecutable: filepath.Join(BaseDir, fmt.Sprintf("stop%s.bat", name)),
 	}
 }
+
+type Service struct {
+	Id               string `xml:"id"`
+	Name             string `xml:"name"`
+	Description      string `xml:"description"`
+	LogPath          string `xml:"logpath"`
+	LogMode          string `xml:"logmode"`
+	Depends          string `xml:"depends"`
+	Executable       string `xml:"executable"`
+	StopExecutable   string `xml:"stopexecutable"`
+	WorkingDirectory string `xml:"workingdirectory"`
+}
