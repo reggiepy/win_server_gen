@@ -9,6 +9,7 @@
 ## Installation
 
 ```bash
+https://github.com/winsw/winsw
 git clone https://github.com/reggiepy/win_server_gen.git
 cd win_server_gen
 go mod tidy
