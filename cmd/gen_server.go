@@ -9,8 +9,20 @@ import (
 	"win_server_gen/handler"
 )
 
+type service struct {
+	Id               string `xml:"id"`
+	Name             string `xml:"name"`
+	Description      string `xml:"description"`
+	LogPath          string `xml:"logpath"`
+	LogMode          string `xml:"logmode"`
+	Depends          string `xml:"depends"`
+	Executable       string `xml:"executable"`
+	StopExecutable   string `xml:"stopexecutable"`
+	WorkingDirectory string `xml:"workingdirectory"`
+}
+
 var (
-	server2     = &handler.Service{}
+	server2     = &service{}
 	fileOption2 = &handler.FileOption{}
 )
 
@@ -65,6 +77,7 @@ var genServerCmd = &cobra.Command{
 		defer f.Close()
 		encoder := xml.NewEncoder(f)
 		encoder.Indent("", "    ")
+
 		err = encoder.Encode(server2)
 		if err != nil {
 			fmt.Printf("error unmarsh xml: %v", err)
