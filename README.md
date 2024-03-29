@@ -1,4 +1,5 @@
 # golang gen windows server
+## 项目已经不在单独维护，请转到 [win_helper](https://github.com/reggiepy/win_helper)
 
 [![go version](https://img.shields.io/github/go-mod/go-version/reggiepy/win_server_gen?color=success&filename=go.mod&style=flat)](https://github.com/reggiepy/win_server_gen)
 [![release](https://img.shields.io/github/v/tag/reggiepy/win_server_gen?color=success&label=release)](https://github.com/reggiepy/win_server_gen)
